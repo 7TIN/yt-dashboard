@@ -1,9 +1,10 @@
 // lib/auth.ts
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
-import { prisma } from "./prisma";
+import GoogleProvider from "next-auth/providers/google";
+import { prisma } from "./prisma"; // Make sure you have a prisma client instance exported from here
 
+// Use a NAMED export here, not a default one.
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
@@ -27,6 +28,8 @@ export const authOptions: NextAuthOptions = {
     maxAge: 60 * 60 * 24 * 30, // 30 days
   },
 
+  secret: process.env.NEXTAUTH_SECRET,
+
   callbacks: {
     async jwt({ token, account, user }) {
       if (account) {
@@ -37,14 +40,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        accessToken: token.accessToken as string,
-        refreshToken: token.refreshToken as string,
-      };
+      session.user.accessToken = token.accessToken as string;
+      session.user.refreshToken = token.refreshToken as string;
+      session.accessToken = token.accessToken as string; // Also add to session root for easier access
       return session;
     },
   },
 };
-
-export default authOptions;

@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
 import VideoDetails from "@/components/VideoDetails";
 import CommentSection from "@/components/CommentSection";
 import NotesSection from "@/components/NotesSection";
 import VideoPlayer from "@/components/VideoPlayer";
+import { authOptions } from "@/lib/auth";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
