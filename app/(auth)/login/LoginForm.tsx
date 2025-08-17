@@ -1,12 +1,16 @@
 "use client";
 
-import { Suspense } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import GoogleSignin from "./GoogleSignin";
+import { Suspense } from "react";
 
 export default function LoginForm() {
-  // If later you want email/password, you can add react-hook-form here
   return (
     <main className="flex justify-center items-center min-h-screen">
       <Card className="w-[380px]">
@@ -15,13 +19,11 @@ export default function LoginForm() {
           <CardDescription>Login to your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <Form>
-            <form className="flex flex-col gap-2">
-              <Suspense fallback={<div>Loading Google Sign-in...</div>}>
-                <GoogleSignin />
-              </Suspense>
-            </form>
-          </Form>
+          <div className="flex flex-col gap-2">
+            <Suspense fallback={<div>Loading login form...</div>}>
+              <GoogleSignin />
+            </Suspense>
+          </div>
         </CardContent>
       </Card>
     </main>
